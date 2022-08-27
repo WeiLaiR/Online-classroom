@@ -4,6 +4,7 @@ package com.wei.kt.vod.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wei.kt.exception.KtException;
 import com.wei.kt.model.vod.Teacher;
 import com.wei.kt.result.Result;
 import com.wei.kt.vo.vod.TeacherQueryVo;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value="/admin/vod/teacher")
+@CrossOrigin
 public class TeacherController {
 
 
@@ -45,6 +47,14 @@ public class TeacherController {
     @ApiOperation("查询所有讲师")
     @GetMapping("findAll")
     public Result findAllTeacher() {
+
+        try {
+            int i = 1 / 0;
+        }catch (Exception e) {
+            throw new KtException(201,"执行异常处理");
+        }
+
+
         //调用service方法
         List<Teacher> list = teacherService.list();
         return Result.ok(list).message("查询数据成功");
@@ -68,7 +78,7 @@ public class TeacherController {
 
     //条件查询分页列表
     @ApiOperation(value = "获取分页列表")
-    @PostMapping("{page}/{limit}")
+    @PostMapping("/{page}/{limit}")
     public Result index(
             @ApiParam(name = "page", value = "当前页码", required = true)
             @PathVariable Long page,
@@ -101,5 +111,42 @@ public class TeacherController {
         IPage<Teacher> pageModel = teacherService.page(pageParam, wrapper);
         return Result.ok(pageModel);
     }
+
+
+    @ApiOperation(value = "新增")
+    @PostMapping("save")
+    public Result save(@RequestBody Teacher teacher) {
+        teacherService.save(teacher);
+        return Result.ok(null);
+    }
+
+
+    @ApiOperation(value = "获取")
+    @GetMapping("get/{id}")
+    public Result get(@PathVariable Long id) {
+        Teacher teacher = teacherService.getById(id);
+        return Result.ok(teacher);
+    }
+
+
+    @ApiOperation(value = "修改")
+    @PutMapping("update")
+    public Result updateById(@RequestBody Teacher teacher) {
+        teacherService.updateById(teacher);
+        return Result.ok(null);
+    }
+
+
+    @ApiOperation(value = "根据id列表删除")
+    @DeleteMapping("batchRemove")
+    public Result batchRemove(@RequestBody List<Long> idList) {
+        teacherService.removeByIds(idList);
+        return Result.ok(null);
+    }
+
+
+
+
+
 }
 

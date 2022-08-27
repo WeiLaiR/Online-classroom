@@ -17,7 +17,5 @@ public class TeacherQueryVo {
 
 	@ApiModelProperty(value = "入驻时间")
 	private String joinDateEnd;
-
-
 }
 
