@@ -16,6 +16,13 @@
     </modules>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.wei</groupId>
+            <artifactId>service_utils</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!--数据载体-->
         <dependency>
             <groupId>com.wei</groupId>
