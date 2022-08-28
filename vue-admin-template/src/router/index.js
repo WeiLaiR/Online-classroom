@@ -78,7 +78,7 @@ export const constantRoutes = [
       name: 'TeacherCreate',
       component: () => import('@/views/vod/teacher/form'),
       meta: { title: '添加讲师' },
-      hidden: true
+      // hidden: true
     },
     {
       path: 'teacher/edit/:id',
