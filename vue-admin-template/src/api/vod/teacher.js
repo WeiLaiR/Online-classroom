@@ -41,4 +41,12 @@ export default {
         data: teacher
       })
     },
+
+    batchRemove(idList) {
+      return request({
+        url: `${api_name}/batchRemove`,
+        method: `delete`,
+        data: idList
+      })
+    },
 }

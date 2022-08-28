@@ -34,6 +34,16 @@
       </el-form>
     </el-card>
 
+    <!-- 工具按钮 -->
+    <el-card class="operate-container" shadow="never">
+      <i class="el-icon-tickets" style="margin-top: 5px"></i>
+      <span style="margin-top: 5px">数据列表</span>
+      <el-button class="btn-add" @click="add()" style="margin-left: 10px;">添加</el-button>
+      <el-button class="btn-add" @click="batchRemove()" >批量删除</el-button>
+    </el-card>
+
+    
+
     <!-- 表格 -->
     <el-table
       :data="list"
@@ -79,7 +89,6 @@
       @size-change="changePageSize"
       @current-change="changeCurrentPage"
     />
-
 
   </div>
 </template>
@@ -143,6 +152,39 @@ export default {
         this.fetchData()
         this.$message.success(response.message)
       })
+    },
+    // 批量删除
+    batchRemove() {
+      if (this.multipleSelection.length === 0) {
+        this.$message.warning('请选择要删除的记录！')
+        return
+      }
+      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 点击确定，远程调用ajax
+        // 遍历selection，将id取出放入id列表
+        var idList = []
+        this.multipleSelection.forEach(item => {
+          idList.push(item.id)
+        })
+        // 调用api
+        return teacherApi.batchRemove(idList)
+      }).then((response) => {
+        this.fetchData()
+        this.$message.success(response.message)
+      }).catch(error => {
+        if (error === 'cancel') {
+          this.$message.info('取消删除')
+        }
+      })
+    },
+    // 当多选选项发生变化的时候调用
+    handleSelectionChange(selection) {
+      console.log(selection)
+      this.multipleSelection = selection
     },
   }
 }
