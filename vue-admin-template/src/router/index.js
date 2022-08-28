@@ -55,40 +55,57 @@ export const constantRoutes = [
     }]
   },
 
-// 讲师管理
-{
-  path: '/vod',
-  component: Layout,
-  redirect: '/vod/course/list',
-  name: 'Vod',
-  meta: {
-    title: '点播管理',
-    icon: 'el-icon-bank-card'
+  // 讲师管理
+  {
+    path: '/vod',
+    component: Layout,
+    redirect: '/vod/course/list',
+    name: 'Vod',
+    meta: {
+      title: '点播管理',
+      icon: 'el-icon-bank-card'
+    },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'teacher/list',
+        name: 'TeacherList',
+        component: () => import('@/views/vod/teacher/list'),
+        meta: { title: '讲师列表' }
+      },
+      {
+        path: 'teacher/create',
+        name: 'TeacherCreate',
+        component: () => import('@/views/vod/teacher/form'),
+        meta: { title: '添加讲师' },
+        // hidden: true
+      },
+      {
+        path: 'teacher/edit/:id',
+        name: 'TeacherEdit',
+        component: () => import('@/views/vod/teacher/form'),
+        meta: { title: '编辑讲师' },
+        hidden: true
+      }
+    ]
   },
-  alwaysShow: true,
-  children: [
-    {
-      path: 'teacher/list',
-      name: 'TeacherList',
-      component: () => import('@/views/vod/teacher/list'),
-      meta: { title: '讲师列表' }
-    },
-    {
-      path: 'teacher/create',
-      name: 'TeacherCreate',
-      component: () => import('@/views/vod/teacher/form'),
-      meta: { title: '添加讲师' },
-      // hidden: true
-    },
-    {
-      path: 'teacher/edit/:id',
-      name: 'TeacherEdit',
-      component: () => import('@/views/vod/teacher/form'),
-      meta: { title: '编辑讲师' },
-      hidden: true
-    }
-  ]
-},
+
+  {
+    path: '/subject',
+    component: Layout,
+    redirect: '/subject/list',
+    name: '课程分类管理',
+    alwaysShow: true,
+    meta: { title: '课程分类管理', icon: 'example' },
+    children: [
+      {
+        path: 'list',
+        name: '课程分类列表',
+        component: () => import('@/views/vod/subject/list'),
+        meta: { title: '课程分类列表', icon: 'table' }
+      }
+    ]
+  },
 
 
   {
