@@ -110,7 +110,7 @@ export default {
     // 上传成功回调
     handleAvatarSuccess(res, file) {
       // console.log(res)
-      if (res.code==20000) {
+      if (res.code === 20000) {
         // console.log(res)
         this.teacher.avatar = res.data
         // 强制重新渲染
