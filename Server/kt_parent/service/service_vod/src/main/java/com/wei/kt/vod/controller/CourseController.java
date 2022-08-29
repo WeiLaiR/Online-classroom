@@ -44,4 +44,19 @@ public class CourseController {
         Map<String,Object> map = courseService.findPage(pageParam, courseQueryVo);
         return Result.ok(map);
     }
+
+
+    @ApiOperation(value = "获取")
+    @GetMapping("get/{id}")
+    public Result get(@PathVariable Long id) {
+        CourseFormVo course = courseService.getCourseFormVoById(id);
+        return Result.ok(course);
+    }
+
+    @ApiOperation(value = "修改")
+    @PutMapping("update")
+    public Result updateById(@RequestBody CourseFormVo courseFormVo) {
+        courseService.updateCourseById(courseFormVo);
+        return Result.ok();
+    }
 }
