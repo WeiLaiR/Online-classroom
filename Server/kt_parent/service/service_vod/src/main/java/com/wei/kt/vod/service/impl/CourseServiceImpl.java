@@ -4,13 +4,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wei.kt.model.vod.Course;
+import com.wei.kt.model.vod.CourseDescription;
 import com.wei.kt.model.vod.Subject;
 import com.wei.kt.model.vod.Teacher;
+import com.wei.kt.vo.vod.CourseFormVo;
 import com.wei.kt.vo.vod.CourseQueryVo;
 import com.wei.kt.vod.mapper.CourseMapper;
+import com.wei.kt.vod.service.CourseDescriptionService;
 import com.wei.kt.vod.service.CourseService;
 import com.wei.kt.vod.service.SubjectService;
 import com.wei.kt.vod.service.TeacherService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -27,6 +31,30 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private SubjectService subjectService;
+    @Autowired
+    private CourseDescriptionService descriptionService;
+
+
+
+    //实现方法
+//添加课程基本信息
+    @Override
+    public Long saveCourseInfo(CourseFormVo courseFormVo) {
+        //保存课程基本信息
+        Course course = new Course();
+        BeanUtils.copyProperties(courseFormVo, course);
+        baseMapper.insert(course);
+
+        //保存课程详情信息
+        CourseDescription courseDescription = new CourseDescription();
+        courseDescription.setDescription(courseFormVo.getDescription());
+        courseDescription.setCourseId(course.getId());
+        descriptionService.save(courseDescription);
+
+        //返回课程id
+        return course.getId();
+    }
+
 
     //课程列表
     @Override
