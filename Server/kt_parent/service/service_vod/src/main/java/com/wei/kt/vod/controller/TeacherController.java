@@ -48,13 +48,6 @@ public class TeacherController {
     @GetMapping("findAll")
     public Result findAllTeacher() {
 
-        try {
-            int i = 1 / 0;
-        }catch (Exception e) {
-            throw new KtException(201,"执行异常处理");
-        }
-
-
         //调用service方法
         List<Teacher> list = teacherService.list();
         return Result.ok(list).message("查询数据成功");
