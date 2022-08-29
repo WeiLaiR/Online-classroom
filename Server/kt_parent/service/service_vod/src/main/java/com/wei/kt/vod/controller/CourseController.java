@@ -3,6 +3,7 @@ package com.wei.kt.vod.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wei.kt.model.vod.Course;
 import com.wei.kt.result.Result;
+import com.wei.kt.vo.vod.CourseFormVo;
 import com.wei.kt.vo.vod.CourseQueryVo;
 import com.wei.kt.vod.service.CourseService;
 import io.swagger.annotations.Api;
@@ -21,6 +22,14 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
+
+    //添加课程基本信息
+    @ApiOperation(value = "新增")
+    @PostMapping("save")
+    public Result save(@RequestBody CourseFormVo courseFormVo) {
+        Long courseId = courseService.saveCourseInfo(courseFormVo);
+        return Result.ok(courseId);
+    }
 
     @ApiOperation(value = "获取分页列表")
     @GetMapping("{page}/{limit}")
