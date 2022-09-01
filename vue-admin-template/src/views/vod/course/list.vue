@@ -204,7 +204,7 @@
       },
   
       add() {
-        this.$router.push({ path: '/course/course/info' })
+        this.$router.push({ path: '/vodcourse/course/info' })
       },
   
       // 每页记录数改变，size：回调参数，表示当前选中的“每页条数”
