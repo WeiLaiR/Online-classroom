@@ -8,6 +8,7 @@ import com.wei.kt.model.vod.CourseDescription;
 import com.wei.kt.model.vod.Subject;
 import com.wei.kt.model.vod.Teacher;
 import com.wei.kt.vo.vod.CourseFormVo;
+import com.wei.kt.vo.vod.CoursePublishVo;
 import com.wei.kt.vo.vod.CourseQueryVo;
 import com.wei.kt.vod.mapper.CourseMapper;
 import com.wei.kt.vod.service.CourseDescriptionService;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +35,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     private SubjectService subjectService;
     @Autowired
     private CourseDescriptionService descriptionService;
+
+    @Autowired
+    private CourseMapper courseMapper;
 
 
 
@@ -149,6 +154,24 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         CourseDescription courseDescription = new CourseDescription();
         courseDescription.setDescription(courseFormVo.getDescription());
         descriptionService.updateById(courseDescription);
+    }
+
+
+
+    //根据id获取课程发布信息
+    @Override
+    public CoursePublishVo getCoursePublishVo(Long id) {
+        return courseMapper.selectCoursePublishVoById(id);
+    }
+
+    //根据id发布课程
+    @Override
+    public boolean publishCourseById(Long id) {
+        Course course = new Course();
+        course.setId(id);
+        course.setPublishTime(new Date());
+        course.setStatus(1);
+        return this.updateById(course);
     }
 
 
