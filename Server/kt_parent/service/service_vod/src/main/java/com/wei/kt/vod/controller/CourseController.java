@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wei.kt.model.vod.Course;
 import com.wei.kt.result.Result;
 import com.wei.kt.vo.vod.CourseFormVo;
+import com.wei.kt.vo.vod.CoursePublishVo;
 import com.wei.kt.vo.vod.CourseQueryVo;
 import com.wei.kt.vod.service.CourseService;
 import io.swagger.annotations.Api;
@@ -59,4 +60,26 @@ public class CourseController {
         courseService.updateCourseById(courseFormVo);
         return Result.ok();
     }
+
+
+    @ApiOperation("根据id获取课程发布信息")
+    @GetMapping("getCoursePublishVo/{id}")
+    public Result getCoursePublishVoById(
+            @ApiParam(value = "课程ID", required = true)
+            @PathVariable Long id){
+
+        CoursePublishVo coursePublishVo = courseService.getCoursePublishVo(id);
+        return Result.ok(coursePublishVo);
+    }
+
+    @ApiOperation("根据id发布课程")
+    @PutMapping("publishCourseById/{id}")
+    public Result publishCourseById(
+            @ApiParam(value = "课程ID", required = true)
+            @PathVariable Long id){
+
+        boolean result = courseService.publishCourseById(id);
+        return Result.ok();
+    }
+
 }
