@@ -153,6 +153,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         //修改课程详情信息
         CourseDescription courseDescription = new CourseDescription();
         courseDescription.setDescription(courseFormVo.getDescription());
+
+        courseDescription.setId(course.getId());
+
         descriptionService.updateById(courseDescription);
     }
 
