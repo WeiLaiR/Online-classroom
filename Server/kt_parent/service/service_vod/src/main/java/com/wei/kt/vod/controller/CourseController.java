@@ -58,7 +58,7 @@ public class CourseController {
     @PutMapping("update")
     public Result updateById(@RequestBody CourseFormVo courseFormVo) {
         courseService.updateCourseById(courseFormVo);
-        return Result.ok();
+        return Result.ok(courseFormVo.getId());
     }
 
 
